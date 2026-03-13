@@ -3,7 +3,7 @@
 void aimbot() {
 	if (!TargetPawn) return;
 
-	auto mesh = read<uintptr_t>(TargetPawn + 0x310); //https://fn.dumps.host/?class=ACharacter&member=Mesh
+	auto mesh = read<uintptr_t>(TargetPawn + 0x330); //https://fn.dumps.host/?class=ACharacter&member=Mesh
 	if (!mesh) {
 		ClosestDistance = FLT_MAX;
 		TargetPawn = NULL;

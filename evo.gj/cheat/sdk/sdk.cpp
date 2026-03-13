@@ -2,10 +2,10 @@
 
 Vector3 SDK::GetBoneWithRotation(uintptr_t mesh, int id)
 {
-	int IsCached = read<int>(mesh + 0x648);
+	int IsCached = read<int>(mesh + 0x600);
 	auto BoneTransform = read<FTransform>(read<uintptr_t>(mesh + 0x10 * IsCached + 0x600) + 0x60 * id);
 	
-	FTransform ComponentToWorld = read<FTransform>(mesh + 0x240);
+	FTransform ComponentToWorld = read<FTransform>(mesh + 0x1E0);
 
 	D3DMATRIX Matrix;
 	Matrix = MatrixMultiplication(BoneTransform.ToMatrixWithScale(), ComponentToWorld.ToMatrixWithScale());

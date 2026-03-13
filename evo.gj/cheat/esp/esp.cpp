@@ -5,11 +5,11 @@ void Esp::ActorLoop() {
 	
 	//get address
 	{
-		LocalPtrs::Gworld = read<uint64_t>(BaseId + 0xEE2F8E8); //https://fn.dumps.host/offsets?offset=GWorld
+		LocalPtrs::Gworld = read<uint64_t>(BaseId + 0x17842098); //https://fn.dumps.host/offsets?offset=GWorld
 		if (Debug::PrintPointers) Util::PrintPtr("Uworld: ", LocalPtrs::Gworld);
 		if (!LocalPtrs::Gworld) return;
 
-		uintptr_t GameInstance = read<uint64_t>(LocalPtrs::Gworld + 0x1b8); //https://fn.dumps.host/?class=UWorld&member=OwningGameInstance
+		uintptr_t GameInstance = read<uint64_t>(LocalPtrs::Gworld + 0x238); //https://fn.dumps.host/?class=UWorld&member=OwningGameInstance
 		if (Debug::PrintPointers) Util::PrintPtr("GameInstance: ", GameInstance);
 		if (!GameInstance) return;
 
@@ -21,11 +21,11 @@ void Esp::ActorLoop() {
 		if (Debug::PrintPointers) Util::PrintPtr("PlayerController: ", LocalPtrs::PlayerController);
 		if (!LocalPtrs::PlayerController) return;
 		
-		LocalPtrs::Player = read<uint64_t>(LocalPtrs::PlayerController + 0x330); //https://fn.dumps.host/?class=APlayerController&member=AcknowledgedPawn
+		LocalPtrs::Player = read<uint64_t>(LocalPtrs::PlayerController + 0x358); //https://fn.dumps.host/?class=APlayerController&member=AcknowledgedPawn
 		if (Debug::PrintPointers) Util::PrintPtr("Player: ", LocalPtrs::Player);
 		if (!LocalPtrs::Player) return;
 
-		LocalPtrs::RootComponent = read<uint64_t>(LocalPtrs::Player + 0x190); //https://fn.dumps.host/?class=AActor&member=RootComponent
+		LocalPtrs::RootComponent = read<uint64_t>(LocalPtrs::Player + 0x1B0); //https://fn.dumps.host/?class=AActor&member=RootComponent
 		if (Debug::PrintPointers) Util::PrintPtr("RootComponent: ", LocalPtrs::RootComponent);
 		if (!LocalPtrs::RootComponent) return;
 
@@ -33,11 +33,11 @@ void Esp::ActorLoop() {
 
 	//get player array then loop through it
 	{
-		uintptr_t GameState = read<uintptr_t>(LocalPtrs::Gworld + 0x158); //https://fn.dumps.host/?class=UWorld&member=GameState
+		uintptr_t GameState = read<uintptr_t>(LocalPtrs::Gworld + 0x1C0); //https://fn.dumps.host/?class=UWorld&member=GameState
 		if (Debug::PrintPointers) Util::PrintPtr("GameState: ", GameState);
 		if (!GameState) return;
 
-		uintptr_t PlayerArrayOffset = 0x2a0; //https://fn.dumps.host/?class=AGameStateBase&member=PlayerArray
+		uintptr_t PlayerArrayOffset = 0x2C8; //https://fn.dumps.host/?class=AGameStateBase&member=PlayerArray
 		//PlayerArray is stored as an array in the sdk, it consist of a list of all the player states in the current game
 		uintptr_t PlayerArray = read<uintptr_t>(GameState + PlayerArrayOffset); 
 
@@ -51,12 +51,12 @@ void Esp::ActorLoop() {
 			if (!PlayerState) continue; // we say if the pointer is invalid to continue, this means it will continue onto the next loop
 
 			//since we only have the player state, we use PawnPrivate to get to the player
-			uintptr_t Player = read<uintptr_t>(PlayerState + 0x308); //https://fn.dumps.host/?class=APlayerState&member=PawnPrivate
+			uintptr_t Player = read<uintptr_t>(PlayerState + 0x328); //https://fn.dumps.host/?class=APlayerState&member=PawnPrivate
 			if (Debug::PrintPointers) Util::PrintPtr("Enemy Player: ", Player);
 			if (!Player) continue;
 			if (Player == LocalPtrs::Player) continue; //if this current player we are looping through equals our local player then continue, so we dont draw esp on ourselves
 
-			uintptr_t Mesh = read<uintptr_t>(Player + 0x310); //https://fn.dumps.host/?class=ACharacter&member=Mesh
+			uintptr_t Mesh = read<uintptr_t>(Player + 0x330); //https://fn.dumps.host/?class=ACharacter&member=Mesh
 			if (Debug::PrintPointers) Util::PrintPtr("Enemy Mesh: ", Mesh);
 			if (!Mesh) continue;
 

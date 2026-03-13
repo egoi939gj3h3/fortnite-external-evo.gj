@@ -9,6 +9,6 @@ public:
 inline bool bCornerBox = true;
 
 namespace Debug {
-	static bool PrintPointers = false;
-	static bool PrintLocations = false;
+	static bool PrintPointers = true;
+	static bool PrintLocations = true;
 }
