@@ -21,7 +21,7 @@ struct CamewaDescwipsion
 };
 Camera SDK::GetViewAngles() {
 	char v1; // r8
-	CamewaDescwipsion ViewPoint = read<CamewaDescwipsion>(BaseId + 0x10CB8D0);
+	CamewaDescwipsion ViewPoint = read<CamewaDescwipsion>(BaseId + 0x17842098);
 	BYTE* v2 = (BYTE*)&ViewPoint;
 	int i; // edx
 	__int64 result; // rax
